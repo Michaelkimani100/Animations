@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Interactive 3d objects</title> 
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/objects.js"></script>
+    <link rel="stylesheet" href="css/main.css"></link>
+
+
+   
+</head>
+
+<body onload="init()">
+    <div id="content">
+        <p><b>Select action:</b>
+            <label><input type="radio" name="action" id="mouseRotate">Rotate</label>
+            <label><input type="radio" name="action" id="mouseDrag">Drag</label>
+            <label><input type="radio" name="action" id="mouseAdd">Add</label>
+            <label><input type="radio" name="action" id="mouseDelete">Delete</label>
+        </p>
+        <div id="canvas-holder">
+            <canvas id="maincanvas" width="550" height="300"></canvas>
+        </div>
+    </div>
+    <div id='grand'></div>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3d</title>
+    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script> -->
+
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/ObjectLoader.js"></script>
+    <script>
+        import {
+            ObjectLoader
+        } from './js/ObjectLoader.js';
+    </script>
+    <script>
+        var scene = new THREE.Scene();
+
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        //Automatically resize the scene
+        window.addEventListener('resize', function() {
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+        //Add Orbit controls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        //object loader
+        var loader = new THREE.ObjectLoader();
+
+        loader.load(
+            'models/dragon.json',
+            function(object) {
+                scene.add(object)
+            }
+        );
+        //craate the object
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        //create an array of materials
+        var cubeMaterials = [
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/1.jpg'),
+                side: THREE.DoubleSide
+            }),
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/2.jpg'),
+                side: THREE.DoubleSide
+            }),
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/3.jpg'),
+                side: THREE.DoubleSide
+            }),
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/4.jpg'),
+                side: THREE.DoubleSide
+            }),
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/5.jpg'),
+                side: THREE.DoubleSide
+            }),
+            new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('img/6.jpg'),
+                side: THREE.DoubleSide
+            })
+        ];
+        //create material,color,imagetexture etc
+        var material = new THREE.MeshFaceMaterial(cubeMaterials);
+        // var material =new THREE.MeshBasicMaterial({
+        // 	color:0xFFFFFF,
+        // 	wireframe:true
+        // });
+        var cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        camera.position.z = 3;
+        //floor
+        var floorGeometry = new THREE.CubeGeometry(10, 1, 10);
+        var floormaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('img/leftwall.jpeg'),
+            side: THREE.DoubleSide
+        });
+        var floorcube = new THREE.Mesh(floorGeometry, floormaterial);
+        floorcube.position.y = -5;
+        scene.add(floorcube);
+
+        //Celling
+        var cellingGeometry = new THREE.CubeGeometry(10, 1, 10);
+        var cellingmaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('img/ceeling.jpg'),
+            side: THREE.DoubleSide
+        });
+        var cellingcube = new THREE.Mesh(cellingGeometry, cellingmaterial);
+        cellingcube.position.y = 5;
+        scene.add(cellingcube);
+
+        //leftwall
+        var leftwallGeometry = new THREE.CubeGeometry(1, 10, 10);
+        var leftwallMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('img/leftwall.jpeg'),
+            side: THREE.DoubleSide
+        });
+        var leftwallCube = new THREE.Mesh(leftwallGeometry, leftwallMaterial);
+        leftwallCube.position.x = -5;
+        scene.add(leftwallCube);
+
+        //rightwall
+        var rightwallGeometry = new THREE.CubeGeometry(1, 10, 10);
+        var rightwallmaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('img/leftwall.jpeg'),
+            side: THREE.DoubleSide
+        });
+        var rightwallCube = new THREE.Mesh(rightwallGeometry, rightwallmaterial);
+        rightwallCube.position.x = 5;
+        scene.add(rightwallCube)
+
+
+
+
+
+
+        //lighting
+        var ambientLight = new THREE.AmbientLight(0xFFFFFF, 1.5);
+        scene.add(ambientLight);
+        //logic function
+        var update = function() {
+            //This code rotates the cube
+            // cube.rotation.x +=0.01;
+            // cube.rotation.y +=0.005;
+
+        }
+        var render = function() {
+            renderer.render(scene, camera);
+        }
+        var GameLoop = function() {
+            requestAnimationFrame(GameLoop);
+            update();
+            render();
+        }
+        GameLoop();
+    </script>
+
+</body>
+
+</html
